@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Pattern 1/1. Pattern 1.iml" filepath="$PROJECT_DIR$/Pattern 1/1. Pattern 1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Arrays 1-D/Arrays 1-D.iml" filepath="$PROJECT_DIR$/Arrays 1-D/Arrays 1-D.iml" />
       <module fileurl="file://$PROJECT_DIR$/DSA in JAVA.iml" filepath="$PROJECT_DIR$/DSA in JAVA.iml" />
       <module fileurl="file://$PROJECT_DIR$/Patterns Part-1/Patterns Part-1.iml" filepath="$PROJECT_DIR$/Patterns Part-1/Patterns Part-1.iml" />
       <module fileurl="file://$PROJECT_DIR$/Patterns Part-2/Patterns Part-2.iml" filepath="$PROJECT_DIR$/Patterns Part-2/Patterns Part-2.iml" />
