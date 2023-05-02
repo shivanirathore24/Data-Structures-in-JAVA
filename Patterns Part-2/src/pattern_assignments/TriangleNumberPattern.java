@@ -50,3 +50,15 @@ public class TriangleNumberPattern {
 	}
 
 }
+
+/*
+
+Sample Input 2:
+4
+Sample Output 2:
+   1
+  232
+ 34543
+4567654
+
+ */

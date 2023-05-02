@@ -46,3 +46,18 @@ public static void main(String[] args) {
 	        
 }
 }
+
+/*
+
+Sample Input 1 :
+3
+Sample Output 1 :
+*
+*1*
+*121*
+*12321*
+*121*
+*1*
+*
+
+ */

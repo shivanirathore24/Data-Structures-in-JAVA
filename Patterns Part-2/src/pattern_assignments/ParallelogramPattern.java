@@ -29,3 +29,14 @@ public class ParallelogramPattern {
 	}
 
 }
+
+/*
+
+Sample Input 1 :
+3
+Sample Output 1 :
+***
+ ***
+  ***
+
+ */

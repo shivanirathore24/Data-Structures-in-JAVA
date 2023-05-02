@@ -31,3 +31,17 @@ public class OddSquarePattern {
 	}
 
 }
+
+
+/*
+
+Sample Input 2 :
+ 5
+Sample Output 2 :
+13579
+35791
+57913
+79135
+91357
+
+ */

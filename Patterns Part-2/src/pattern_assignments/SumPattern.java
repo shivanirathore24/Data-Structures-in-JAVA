@@ -32,3 +32,14 @@ public class SumPattern {
 	}
 
 }
+
+/*
+
+Sample Input 1 :
+3
+Sample Output 1 :
+1=1
+1+2=3
+1+2+3=6
+
+ */
