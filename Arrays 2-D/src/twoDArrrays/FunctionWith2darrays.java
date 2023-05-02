@@ -30,8 +30,7 @@ public class FunctionWith2darrays {
 		    }
 		    return arr;
 		}
-		      
-		    
+
 		    public static void main(String args[]) {
 		      int [][] input=takeInput();
 		      print2darray(input);
