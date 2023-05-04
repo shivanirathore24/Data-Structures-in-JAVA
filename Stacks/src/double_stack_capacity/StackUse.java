@@ -12,7 +12,6 @@ public class StackUse {
 			stack.push(arr[i]);  //pushing element in  stack
 			System.out.println(arr[i]);
 		}
-		
 		System.out.println("No.of elements in stack:"+stack.size());
 //		while(!stack.isEmpty())
 //		{
