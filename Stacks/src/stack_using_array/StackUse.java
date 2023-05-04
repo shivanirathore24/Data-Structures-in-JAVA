@@ -25,15 +25,13 @@ public class StackUse {
 			System.out.println("Stack is empty, so can't return topmost Element !");
 		}
 		
-		stack.pop();  //we are propogating exception to main using thrpws
-		
+		stack.pop();  //we are propogating exception to main using thrpw
 //		stack.push(10);
 //		System.out.println(stack.top());
 //		stack.pop();
 //		System.out.println(stack.size());
 //		System.out.println(stack.isEmpty());
-		
-		
+
 	}
 
 }
