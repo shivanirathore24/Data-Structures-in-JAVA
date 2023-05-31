@@ -25,7 +25,7 @@ import java.util.Scanner;
  * the nodes with keys greater or equal to than any particular node is stored on the right sub-trees and the ones 
  * less than are stored on the left sub-tree satisfying the binary search property.
  */
-public class BSTUse 
+public class BinaryTreeUse
 {
 	public static BinaryTreeNode<Integer> takeInputLevelwise()  //iterative way
     {
@@ -98,8 +98,56 @@ public class BSTUse
     		System.out.println();
     	} // end of while
     }
-    
-    public static boolean searchBST(BinaryTreeNode<Integer> root, int k)
+
+	public static BinaryTreeNode<Integer> buildTreeUsingInorderPreorder(int[] preOrder, int[] inOrder)
+	{
+		BinaryTreeNode<Integer> root = buildTreeFromPreInHelper(preOrder , inOrder, 0 , preOrder.length -1 , 0, inOrder.length -1);
+		return root;
+	}
+
+	public static BinaryTreeNode<Integer> buildTreeFromPreInHelper(int [] preOrder , int[] inOrder, int siPre, int eiPre, int siIn, int eiIn)
+	{
+		if (siPre > eiPre) {
+			return null;
+		}
+
+		int rootData = preOrder[siPre];
+		BinaryTreeNode<Integer> root = new BinaryTreeNode<Integer>(rootData);
+
+		int rootIndex = -1;
+		for (int i = siIn; i <= eiIn; i++) {
+			if (inOrder[i] == rootData) {
+				rootIndex = i;
+				break;
+			}
+		}
+
+		//assuming that root index actually present in inOrder
+
+		int siPreLeft = siPre + 1;
+		int eiPreLeft;
+		int siPreRight;
+		int eiPreRight = eiPre;
+		int siInLeft = siIn;
+		int eiInLeft = rootIndex - 1;
+		int siInRight = rootIndex + 1;
+		int eiInRight = eiIn;
+
+		int leftSubtreeLength = eiInLeft - siInLeft + 1;
+
+		eiPreLeft = siPreLeft + leftSubtreeLength - 1;
+		siPreRight = eiPreLeft + 1;
+
+		BinaryTreeNode<Integer> left = buildTreeFromPreInHelper(preOrder, inOrder, siPreLeft, eiPreLeft, siInLeft, eiInLeft);
+		BinaryTreeNode<Integer> right = buildTreeFromPreInHelper(preOrder, inOrder, siPreRight, eiPreRight, siInRight, eiInRight);
+
+		root.left = left;
+		root.right = right;
+		return root;
+
+	}
+
+	public static boolean searchBST(BinaryTreeNode<Integer> root, int k)
     {
     	if(root == null)
     	{
@@ -120,9 +168,13 @@ public class BSTUse
     public static void main(String[] args) 
     {
     	//please take Binary Search tree to get correct result
-    	BinaryTreeNode<Integer> root = takeInputLevelwise();
-   	  	printLevelwise(root);
-   	  	
+    	//BinaryTreeNode<Integer> root = takeInputLevelwise();
+
+		//taking predefined BST input
+		int inOrder[] = {1, 2, 3, 4, 5, 6, 7};
+		int preOrder[] = {4, 2, 1, 3, 6, 5, 7};
+		BinaryTreeNode<Integer> root =  buildTreeUsingInorderPreorder(preOrder,inOrder);
+		printLevelwise(root);
    	  	//System.out.println(searchBST(root,5));
    	  	Scanner s = new Scanner(System.in);
    	  	int k = s.nextInt();

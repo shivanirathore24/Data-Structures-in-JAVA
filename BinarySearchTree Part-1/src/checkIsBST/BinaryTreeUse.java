@@ -1,24 +1,11 @@
-/*
- * Given a Binary Search Tree and two integers k1 and k2, find and print the elements which are in range k1 and k2 (both inclusive).
-Print the elements in increasing order.
-In BSTs, inorder traversal prints the elements of the tree in ascending order. So, while printing the answer use inorder traversal,
-which means calling to the left subtree first, then printing the data, and finally calling to the right subtree
-Sample Input 1:
-8 5 10 2 6 -1 -1 -1 -1 -1 7 -1 -1
-6 10
-Sample Output 1:
-6 7 8 10
- */
-
-package elementsInRangeK1K2_BST;
-
+package checkIsBST;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
 import searchNodeInBST.BinaryTreeNode;
 
-public class BSTUse 
+public class BinaryTreeUse
 {
 	public static BinaryTreeNode<Integer> takeInputLevelwise()  //iterative way
     {
@@ -142,45 +129,135 @@ public class BSTUse
 
 	}
 	
-	public static void elementsInRangeK1K2(BinaryTreeNode<Integer> root,int k1,int k2){
+	//way-1 TC:O(n^2)
+	public static boolean isBST1(BinaryTreeNode<Integer> root)
+	{
 		if(root == null)
 		{
-			return;
-		}
-		if(root.data < k1){
-			elementsInRangeK1K2(root.right, k1, k2);
-		}
-		else if(root.data >k2)
-		{
-			elementsInRangeK1K2(root.left, k1, k2);
-		}
-		else{
-			// System.out.print(root.data+" ");
-			// elementsInRangeK1K2(root.right, k1, k2);
-			// elementsInRangeK1K2(root.left, k1, k2);
-			
-			//to print data in ascending order for BST : Inorder traversal
-			elementsInRangeK1K2(root.left, k1, k2);
-			System.out.print(root.data+" ");
-			elementsInRangeK1K2(root.right, k1, k2);
+			return true;
 		}
 		
+		int leftMax = maximum(root.left);
+		if(leftMax >= root.data) {
+			return false;
+		}
+		
+		int rightMin = minimum(root.right);
+		if(rightMin < root.data)
+		{
+			return false;
+		}
+		
+		boolean isLeftBST = isBST1(root.left);
+		boolean isRightBST = isBST1(root.right);
+		return isLeftBST && isRightBST;
 	}
 	
-    public static void main(String[] args)
+    private static int minimum(BinaryTreeNode<Integer> root) 
+    {
+		if(root == null)
+		{
+			return Integer.MAX_VALUE;
+		}
+		int leftmin = minimum(root.left);
+		int rightmin = minimum(root.right);
+		return Math.min(root.data, Math.min(leftmin, rightmin));
+	}
+
+	private static int maximum(BinaryTreeNode<Integer> root) 
+	{
+		if(root == null) {
+			return Integer.MIN_VALUE;
+		}
+		int leftmax = maximum(root.left);
+		int rightmax = maximum(root.right);
+		return Math.max(root.data, Math.max(leftmax, rightmax));
+	}
+	
+	//way2 TC: O(n)
+	public static IsBSTReturn isBST2(BinaryTreeNode<Integer> root)
+	{
+		if(root == null)
+		{
+			IsBSTReturn ans = new IsBSTReturn(Integer.MAX_VALUE, Integer.MIN_VALUE, true);
+			return ans;
+		}
+		
+		IsBSTReturn leftAns = isBST2(root.left);
+		IsBSTReturn rightAns = isBST2(root.right);
+		
+		int min = Math.min(root.data, Math.min(leftAns.min, rightAns.min));
+		int max = Math.max(root.data, Math.max(leftAns.max, rightAns.max));
+		boolean isBST = true;
+		
+		if(leftAns.max >= root.data)
+		{
+			isBST = false;
+		}
+		
+		if(rightAns.min < root.data)
+		{
+			isBST = false;
+		}
+		
+		if(!leftAns.isBST)
+		{
+			isBST = false;
+		}
+		
+		if(!rightAns.isBST)
+		{
+			isBST = false;
+		}
+		IsBSTReturn ans = new IsBSTReturn(min,max,isBST);
+		return ans;
+	}
+	
+	//way3 TC:O(n)
+	public static boolean isBST3(BinaryTreeNode<Integer> root, int minRange,int maxRange)
+	{
+		if(root == null)
+		{
+			return true;
+		}
+		
+		if(root.data <minRange || root.data > maxRange)
+		{
+			return false;
+		}
+		
+		boolean isLeftWithinRange = isBST3(root.left, minRange, root.data -1);
+		boolean isRightWithinRange = isBST3(root.right, root.data, maxRange);
+		return isLeftWithinRange && isRightWithinRange;
+	}
+
+	public static void main(String[] args)
     {
     	//BinaryTreeNode<Integer> root = takeInputLevelwise();
     	
-    	//taking predefined input 
+    	//taking predefined BST input 
     	int inOrder[] = {1, 2, 3, 4, 5, 6, 7};  
     	int preOrder[] = {4, 2, 1, 3, 6, 5, 7};
     	BinaryTreeNode<Integer> root =  buildTreeUsingInorderPreorder(preOrder,inOrder);
     	printLevelwise(root); 	
+    	System.out.println(isBST1(root));
+    	System.out.println();
     	
-    	//elementsInRangeK1K2(root,3,6);
-    	Scanner s = new Scanner(System.in);
-    	int k1 = s.nextInt();
-    	int k2 = s.nextInt();
-    	elementsInRangeK1K2(root,k1,k2);  	
+    	//taking predefined non BST input
+    	int inOrder2[] = {1, 2, 3, 4, 8, 6, 7};  
+    	int preOrder2[] = {4, 2, 1, 3, 6, 8, 7};
+    	BinaryTreeNode<Integer> root2 =  buildTreeUsingInorderPreorder(preOrder2,inOrder2);
+    	printLevelwise(root2); 	
+    	System.out.println(isBST1(root2)); 
+    	
+    	//way2
+    	IsBSTReturn ans1 = isBST2(root);
+    	System.out.println(ans1.min+" "+ans1.max+" "+ans1.isBST); 
+    	IsBSTReturn ans2 = isBST2(root2);
+    	System.out.println(ans2.min+" "+ans2.max+" "+ans2.isBST);
+    	
+    	//way3
+    	System.out.println(isBST3(root, Integer.MIN_VALUE, Integer.MAX_VALUE));
+    	System.out.println(isBST3(root2, Integer.MIN_VALUE, Integer.MAX_VALUE));	
     }
 }

@@ -1,11 +1,15 @@
-package checkIsBST;
+/*
+Given a sorted integer array A of size n, which contains all unique elements. You need to construct a balanced BST
+from this input array.Return the root of constructed BST.Note: If array size is even, take first mid as root.
+ */
+package sortedArraytoBST;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
 import searchNodeInBST.BinaryTreeNode;
 
-public class BSTUse 
+public class BinaryTreeUse
 {
 	public static BinaryTreeNode<Integer> takeInputLevelwise()  //iterative way
     {
@@ -129,135 +133,31 @@ public class BSTUse
 
 	}
 	
-	//way-1 TC:O(n^2)
-	public static boolean isBST1(BinaryTreeNode<Integer> root)
+	public static BinaryTreeNode<Integer> sortedArrayToBST(int [] arr, int n)
 	{
-		if(root == null)
-		{
-			return true;
-		}
-		
-		int leftMax = maximum(root.left);
-		if(leftMax >= root.data) {
-			return false;
-		}
-		
-		int rightMin = minimum(root.right);
-		if(rightMin < root.data)
-		{
-			return false;
-		}
-		
-		boolean isLeftBST = isBST1(root.left);
-		boolean isRightBST = isBST1(root.right);
-		return isLeftBST && isRightBST;
+		return sortedArrayToBSTHelper(arr, 0, arr.length-1);
 	}
 	
-    private static int minimum(BinaryTreeNode<Integer> root) 
+    private static BinaryTreeNode<Integer> sortedArrayToBSTHelper(int[] arr, int si, int ei) 
     {
-		if(root == null)
-		{
-			return Integer.MAX_VALUE;
-		}
-		int leftmin = minimum(root.left);
-		int rightmin = minimum(root.right);
-		return Math.min(root.data, Math.min(leftmin, rightmin));
-	}
-
-	private static int maximum(BinaryTreeNode<Integer> root) 
-	{
-		if(root == null) {
-			return Integer.MIN_VALUE;
-		}
-		int leftmax = maximum(root.left);
-		int rightmax = maximum(root.right);
-		return Math.max(root.data, Math.max(leftmax, rightmax));
-	}
-	
-	//way2 TC: O(n)
-	public static IsBSTReturn isBST2(BinaryTreeNode<Integer> root)
-	{
-		if(root == null)
-		{
-			IsBSTReturn ans = new IsBSTReturn(Integer.MAX_VALUE, Integer.MIN_VALUE, true);
-			return ans;
-		}
-		
-		IsBSTReturn leftAns = isBST2(root.left);
-		IsBSTReturn rightAns = isBST2(root.right);
-		
-		int min = Math.min(root.data, Math.min(leftAns.min, rightAns.min));
-		int max = Math.max(root.data, Math.max(leftAns.max, rightAns.max));
-		boolean isBST = true;
-		
-		if(leftAns.max >= root.data)
-		{
-			isBST = false;
-		}
-		
-		if(rightAns.min < root.data)
-		{
-			isBST = false;
-		}
-		
-		if(!leftAns.isBST)
-		{
-			isBST = false;
-		}
-		
-		if(!rightAns.isBST)
-		{
-			isBST = false;
-		}
-		IsBSTReturn ans = new IsBSTReturn(min,max,isBST);
-		return ans;
-	}
-	
-	//way3 TC:O(n)
-	public static boolean isBST3(BinaryTreeNode<Integer> root, int minRange,int maxRange)
-	{
-		if(root == null)
-		{
-			return true;
-		}
-		
-		if(root.data <minRange || root.data > maxRange)
-		{
-			return false;
-		}
-		
-		boolean isLeftWithinRange = isBST3(root.left, minRange, root.data -1);
-		boolean isRightWithinRange = isBST3(root.right, root.data, maxRange);
-		return isLeftWithinRange && isRightWithinRange;
+    	if(si> ei)
+    	{
+    		return null;
+    	}
+    	int mid = (si + ei)/ 2;
+    	BinaryTreeNode<Integer> root = new BinaryTreeNode<>(arr[mid]);
+    	root.left = sortedArrayToBSTHelper(arr, si, mid-1);
+    	root.right = sortedArrayToBSTHelper(arr, mid+1 , ei);
+    	
+		return root;
 	}
 
 	public static void main(String[] args)
-    {
-    	//BinaryTreeNode<Integer> root = takeInputLevelwise();
-    	
-    	//taking predefined BST input 
-    	int inOrder[] = {1, 2, 3, 4, 5, 6, 7};  
-    	int preOrder[] = {4, 2, 1, 3, 6, 5, 7};
-    	BinaryTreeNode<Integer> root =  buildTreeUsingInorderPreorder(preOrder,inOrder);
-    	printLevelwise(root); 	
-    	System.out.println(isBST1(root));
-    	System.out.println();
-    	
-    	//taking predefined non BST input
-    	int inOrder2[] = {1, 2, 3, 4, 8, 6, 7};  
-    	int preOrder2[] = {4, 2, 1, 3, 6, 8, 7};
-    	BinaryTreeNode<Integer> root2 =  buildTreeUsingInorderPreorder(preOrder2,inOrder2);
-    	printLevelwise(root2); 	
-    	System.out.println(isBST1(root2)); 
-    	
-    	//way2
-    	IsBSTReturn ans1 = isBST2(root);
-    	System.out.println(ans1.min+" "+ans1.max+" "+ans1.isBST); 
-    	IsBSTReturn ans2 = isBST2(root2);
-    	System.out.println(ans2.min+" "+ans2.max+" "+ans2.isBST);
-    	
-    	//way3
-    	System.out.println(isBST3(root, Integer.MIN_VALUE, Integer.MAX_VALUE));
-    	System.out.println(isBST3(root2, Integer.MIN_VALUE, Integer.MAX_VALUE));	
+    { 
+		//taking sorted array and converting to balanced BST
+    	int array[] = {1, 2, 3, 4, 5, 6, 7};  
+    	//int array2[] = {10, 15, 20, 25, 35, 50};
+    	BinaryTreeNode<Integer> root = sortedArrayToBST(array,7);
+    	printLevelwise(root); 	 	
     }
 }

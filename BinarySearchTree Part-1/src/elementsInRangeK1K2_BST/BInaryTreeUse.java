@@ -1,15 +1,24 @@
 /*
-Given a sorted integer array A of size n, which contains all unique elements. You need to construct a balanced BST
-from this input array.Return the root of constructed BST.Note: If array size is even, take first mid as root.
+ * Given a Binary Search Tree and two integers k1 and k2, find and print the elements which are in range k1 and k2 (both inclusive).
+Print the elements in increasing order.
+In BSTs, inorder traversal prints the elements of the tree in ascending order. So, while printing the answer use inorder traversal,
+which means calling to the left subtree first, then printing the data, and finally calling to the right subtree
+Sample Input 1:
+8 5 10 2 6 -1 -1 -1 -1 -1 7 -1 -1
+6 10
+Sample Output 1:
+6 7 8 10
  */
-package sortedArraytoBST;
+
+package elementsInRangeK1K2_BST;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
 import searchNodeInBST.BinaryTreeNode;
 
-public class BSTUse 
+public class BInaryTreeUse
 {
 	public static BinaryTreeNode<Integer> takeInputLevelwise()  //iterative way
     {
@@ -133,31 +142,45 @@ public class BSTUse
 
 	}
 	
-	public static BinaryTreeNode<Integer> sortedArrayToBST(int [] arr, int n)
-	{
-		return sortedArrayToBSTHelper(arr, 0, arr.length-1);
+	public static void elementsInRangeK1K2(BinaryTreeNode<Integer> root,int k1,int k2){
+		if(root == null)
+		{
+			return;
+		}
+		if(root.data < k1){
+			elementsInRangeK1K2(root.right, k1, k2);
+		}
+		else if(root.data >k2)
+		{
+			elementsInRangeK1K2(root.left, k1, k2);
+		}
+		else{
+			// System.out.print(root.data+" ");
+			// elementsInRangeK1K2(root.right, k1, k2);
+			// elementsInRangeK1K2(root.left, k1, k2);
+			
+			//to print data in ascending order for BST : Inorder traversal
+			elementsInRangeK1K2(root.left, k1, k2);
+			System.out.print(root.data+" ");
+			elementsInRangeK1K2(root.right, k1, k2);
+		}
+		
 	}
 	
-    private static BinaryTreeNode<Integer> sortedArrayToBSTHelper(int[] arr, int si, int ei) 
+    public static void main(String[] args)
     {
-    	if(si> ei)
-    	{
-    		return null;
-    	}
-    	int mid = (si + ei)/ 2;
-    	BinaryTreeNode<Integer> root = new BinaryTreeNode<>(arr[mid]);
-    	root.left = sortedArrayToBSTHelper(arr, si, mid-1);
-    	root.right = sortedArrayToBSTHelper(arr, mid+1 , ei);
+    	//BinaryTreeNode<Integer> root = takeInputLevelwise();
     	
-		return root;
-	}
-
-	public static void main(String[] args)
-    { 
-		//taking sorted array and converting to balanced BST
-    	int array[] = {1, 2, 3, 4, 5, 6, 7};  
-    	//int array2[] = {10, 15, 20, 25, 35, 50};
-    	BinaryTreeNode<Integer> root = sortedArrayToBST(array,7);
-    	printLevelwise(root); 	 	
+    	//taking predefined input 
+    	int inOrder[] = {1, 2, 3, 4, 5, 6, 7};  
+    	int preOrder[] = {4, 2, 1, 3, 6, 5, 7};
+    	BinaryTreeNode<Integer> root =  buildTreeUsingInorderPreorder(preOrder,inOrder);
+    	printLevelwise(root); 	
+    	
+    	//elementsInRangeK1K2(root,3,6);
+    	Scanner s = new Scanner(System.in);
+    	int k1 = s.nextInt();
+    	int k2 = s.nextInt();
+    	elementsInRangeK1K2(root,k1,k2);  	
     }
 }
