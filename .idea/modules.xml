@@ -13,6 +13,7 @@
       <module fileurl="file://$PROJECT_DIR$/DSA in JAVA.iml" filepath="$PROJECT_DIR$/DSA in JAVA.iml" />
       <module fileurl="file://$PROJECT_DIR$/HashMaps/HashMaps.iml" filepath="$PROJECT_DIR$/HashMaps/HashMaps.iml" />
       <module fileurl="file://$PROJECT_DIR$/LinkedList Part-1/LinkedList Part-1.iml" filepath="$PROJECT_DIR$/LinkedList Part-1/LinkedList Part-1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OOPS Part-1/OOPS Part-1.iml" filepath="$PROJECT_DIR$/OOPS Part-1/OOPS Part-1.iml" />
       <module fileurl="file://$PROJECT_DIR$/Patterns Part-1/Patterns Part-1.iml" filepath="$PROJECT_DIR$/Patterns Part-1/Patterns Part-1.iml" />
       <module fileurl="file://$PROJECT_DIR$/Patterns Part-2/Patterns Part-2.iml" filepath="$PROJECT_DIR$/Patterns Part-2/Patterns Part-2.iml" />
       <module fileurl="file://$PROJECT_DIR$/PriorityQueues/PriorityQueues.iml" filepath="$PROJECT_DIR$/PriorityQueues/PriorityQueues.iml" />
@@ -23,6 +24,7 @@
       <module fileurl="file://$PROJECT_DIR$/Stacks/Stacks.iml" filepath="$PROJECT_DIR$/Stacks/Stacks.iml" />
       <module fileurl="file://$PROJECT_DIR$/Strings/Strings.iml" filepath="$PROJECT_DIR$/Strings/Strings.iml" />
       <module fileurl="file://$PROJECT_DIR$/Trees/Trees.iml" filepath="$PROJECT_DIR$/Trees/Trees.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tries and Huffman Coding/Tries and Huffman Coding.iml" filepath="$PROJECT_DIR$/Tries and Huffman Coding/Tries and Huffman Coding.iml" />
     </modules>
   </component>
 </project>
