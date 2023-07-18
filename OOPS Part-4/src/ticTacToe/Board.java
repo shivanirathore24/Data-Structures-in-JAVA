@@ -27,6 +27,43 @@ public class Board {
 		this.p2Symbol = p2Symbol;
 	}
 
+	public int move(char symbol,int x, int y)
+	{
+		if(x < 0 || x >= boardSize || y < 0 || y>= boardSize || board[x][y] != EMPTY) {
+			return INVALIDMOVE;
+		}
+
+		board[x][y] = symbol;
+		count++;
+
+		//Row
+		if(board[x][0] == board[x][1] && board[x][0] == board[x][2]) {
+			return symbol == p1Symbol ? PLAYER1WINS : PLAYER2WINS;
+		}
+
+		//Column
+		if(board[0][y] == board[1][y] && board[0][y] == board[2][y]) {
+			return symbol == p1Symbol ? PLAYER1WINS : PLAYER2WINS;
+		}
+
+		//Diagonal
+		if(board[0][0] != EMPTY && board[0][0] == board[1][1] && board[0][0] == board[2][2])
+		{
+			return symbol == p1Symbol ? PLAYER1WINS : PLAYER2WINS;
+		}
+
+		if(board[0][2] != EMPTY && board[0][2] == board[1][1] && board[0][2] == board[2][0])
+		{
+			return symbol == p1Symbol ? PLAYER1WINS : PLAYER2WINS;
+		}
+
+		if(count == boardSize * boardSize) {
+			return DRAW;
+		}
+
+		return INCOMPLETE;
+	}
+
 	public void print()
 	{
 		System.out.println("---------------");
@@ -36,7 +73,6 @@ public class Board {
 			}
 			System.out.println();
 		}
-		System.out.println();
 		System.out.println("---------------");
 	}
 }
